@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewBag.Title = "Subscribe";
+}
+
+<h2>Subscribe</h2>
+
+@using (Html.BeginForm())
+{
+    <input type="URL" name="RSSURL" placeholder="Enter RSS Feed to subscribe" class="form-control" value="@ViewBag.URL" style="min-width:100%" />
+    <br />
+    <input type="submit" value="Subscribe" class="btn btn-danger" />
+}
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Image</th>
+            <th>Title</th>
+            <th>News</th>
+            <th>Link</th>
+            <th>Description</th>
+            <th>Publish Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (ViewBag.RSSFeed != null)
+        {
+            foreach (var item in ViewBag.RSSFeed)
+            {
+                <tr>
+                    <td> <a href="@Url.Action("NewsItems", "Home", new {rssOutlet = item.RSSUrl} )" title="News outlet news"><img alt="List View" src="@Url.Content(item.Image)"></a></td>
+                    <td>@item.Title</td>
+                    <td><a href="@Url.Action("NewsItems", "Home", new {rssOutlet = item.RSSUrl} )" title="Read news"> Read News </a></td>
+                    <td><a href="@item.Link" target="_blank">@item.Link</a></td>
+                    <td>@item.Description</td>
+                    <td>@item.PubDate</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
